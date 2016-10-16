@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSE example</title>
+</head>
+<p>
+<p>
+    <button id="send-artifact">New artifact</button>
+    <button id="subscribe-artifacts-events">Subscribe</button>
+    SSE with Artifact: <ul id="artifacts-events"></ul>
+</p>
+</p>
+
+<script type="application/javascript">
+    var artifactEventSource = null;
+
+    addEvent('click', document.getElementById('send-artifact'), postArtifact);
+    addEvent("click", document.getElementById('subscribe-artifacts-events'), subscribe);
+
+    function subscribe() {
+        var artifactEvents = document.getElementById("artifacts-events");
+        artifactEventSource = new EventSource("/sse/artifacts");
+        artifactEventSource.onmessage = function(e) {
+            var newElement = document.createElement("li");
+            newElement.innerHTML = e.data;
+            artifactEvents.appendChild(newElement);
+        };
+    }
+
+    function postArtifact() {
+        var req = new XMLHttpRequest();
+        req.open('POST', 'http://' + document.domain + ':8080/sse/artifacts', false);
+        req.send(null);
+    }
+
+    function addEvent(evnt, elem, func) {
+        if (elem.addEventListener)  // W3C DOM
+            elem.addEventListener(evnt,func,false);
+        else if (elem.attachEvent) { // IE DOM
+            elem.attachEvent("on"+evnt, func);
+        }
+        else { // No much to do
+            elem[evnt] = func;
+        }
+    }
+</script>
+</body>
+</html>
