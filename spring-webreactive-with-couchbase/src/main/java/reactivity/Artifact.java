@@ -34,6 +34,12 @@ public class Artifact {
     private Map<String, String> categories;
 
     /**
+     * Builds a default instance.
+     */
+    public Artifact() {
+    }
+
+    /**
      * Builds a new instance.
      *
      * @param group the group

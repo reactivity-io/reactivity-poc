@@ -15,15 +15,19 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestHeader;
+import reactivity.couchbase.ReactiveCouchbaseArtifactRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.ReplayProcessor;
+import rx.RxReactiveStreams;
 
 /**
  * This controller serves a SSE stream and exposes an endpoint that allows to generate random {@link Artifact} pushed to that stream.
@@ -40,6 +44,12 @@ public class SseController {
      * Uses a {@code ReplayProcessor} to keep messages in a cache.
      */
 	private ReplayProcessor<ServerSentEvent<Artifact>> replayProcessor = ReplayProcessor.createTimeout(CACHE_AGE);
+
+    /**
+     * The couchbase repository.
+     */
+    @Autowired
+    private ReactiveCouchbaseArtifactRepository repository;
 
     /**
      * Generates a random artifact.
@@ -71,7 +81,8 @@ public class SseController {
         }
 
         final Artifact a = new Artifact(group, categories);
-        replayProcessor.onNext(ServerSentEvent.<Artifact>builder(a).retry(Duration.ofSeconds(5)).id(String.valueOf(a.getTimestamp())).build());
+        repository.add(a);
+        replayProcessor.onNext(sse(a));
         return a.getTimestamp();
     }
 
@@ -79,18 +90,38 @@ public class SseController {
      * Returns a SSE stream of artifacts.
      *
      * @param ts the timestamp used as event ID in case of reconnection
-     * @return the SSE streal
+     * @return the SSE stream
      */
 	@GetMapping("/sse/artifacts")
 	Flux<ServerSentEvent<Artifact>> artifact(@RequestHeader(name = "Last-Event-ID", required = false) final Long ts) {
-
-        // If the last message if older than the cache, we potentially lost messages
-        if (ts != null &&  ts < (System.currentTimeMillis() - CACHE_AGE.toMillis())) {
-            throw new IllegalArgumentException();
-        }
+        final AtomicLong timestamp = new AtomicLong(ts == null ? 0L : ts);
 
         // Excludes messages already sent
-		return replayProcessor.log("Reactivity")
-                .filter((e) -> ts == null || ts < e.data().orElseThrow(IllegalStateException::new).getTimestamp());
+        return replayProcessor
+                .log("Reactivity")
+
+                // Make sure we don't replay messages already persisted
+                .filter((e) -> timestamp.get() < e.data().orElseThrow(IllegalStateException::new).getTimestamp())
+
+                // Retrieve all artifacts created since the given timestamp
+                .startWith(RxReactiveStreams.toPublisher(repository.list(timestamp.get()).map(a -> {
+
+                    // Update the timestamp with the newer document
+                    timestamp.set(a.getTimestamp());
+                    return sse(a);
+                })));
 	}
+
+    /**
+     * Builds a new SSE containing the given {@link Artifact}.
+     *
+     * @param artifact the artifact
+     * @return the SSE
+     */
+    private ServerSentEvent<Artifact> sse(final Artifact artifact) {
+        return ServerSentEvent.<Artifact>builder(artifact)
+                .retry(Duration.ofSeconds(5))
+                .id(String.valueOf(artifact.getTimestamp()))
+                .build();
+    }
 }

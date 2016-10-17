@@ -9,81 +9,28 @@
  */
 
 
-package reactivity;
+package reactivity.couchbase;
+
+import com.couchbase.client.java.Bucket;
+import com.couchbase.client.java.CouchbaseCluster;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * A group as a type and a name.
+ * This configuration initializes couchbase connection.
  */
-public class Group {
+@Configuration
+public class Config {
 
     /**
-     * Type.
-     */
-    private String type;
-
-    /**
-     * Name.
-     */
-    private String name;
-
-    /**
-     * Builds a default instance.
-     */
-    public Group() {
-    }
-
-    /**
-     * Builds a new instance.
+     * The application won't be able to use this bucket until an index is created.
+     * To create the index, run the query CREATE PRIMARY INDEX ON `artifacts`.
      *
-     * @param type the type
-     * @param name the name
+     * @return the {@code Bucket}
      */
-    public Group(final String type, final String name) {
-        this.type = type;
-        this.name = name;
-    }
-
-    /**
-     * <p>
-     * Gets the type.
-     * </p>
-     *
-     * @return the type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * <p>
-     * Sets the type.
-     * </p>
-     *
-     * @param type the new type
-     */
-    public void setType(final String type) {
-        this.type = type;
-    }
-
-    /**
-     * <p>
-     * Gets the name.
-     * </p>
-     *
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * <p>
-     * Sets the name
-     * </p>
-     *
-     * @param name the new name
-     */
-    public void setName(final String name) {
-        this.name = name;
+    @Bean
+    Bucket sync() {
+        final CouchbaseCluster cluster = CouchbaseCluster.create("127.0.0.1");
+        return cluster.openBucket("artifacts");
     }
 }

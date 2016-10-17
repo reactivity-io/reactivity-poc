@@ -4,16 +4,16 @@
 
 This POC demonstrates the Web Reactive support in `Spring 5`.
 The application subscribes to a `SSE` stream of `Artifacts`.
-A random `Artifact` is generated each time the user calls a `REST` endpoint and is pushed to the subscribed `SSE` stream.
+A random `Artifact` is persisted to `Couchbase` each time the user calls a `REST` endpoint and is pushed to the subscribed `SSE` stream.
 A `ReplayProcessor` is used to implement a broadcaster cache mechanism that sends the events missed when the `SSE` connection was reconnecting.
 
 ### Use the sample
 
-Checkout the repository and run the command `mvn spring-boot:run`.
+You need to install first `Couchbase` server on your local machine, create a bucket with name `artifacts` and create an index with the following command:
 
-### TODO
+    CREATE PRIMARY INDEX ON `artifacts`
 
-The POC needs to be completed with a `Couchbase` access through `spring-data` where `Artifact` objects can be stored.
+Then checkout the repository and run the command `mvn spring-boot:run`.
 
 ### Inspiration
 
