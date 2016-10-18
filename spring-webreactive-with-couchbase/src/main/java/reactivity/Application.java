@@ -22,7 +22,6 @@ import org.springframework.web.reactive.config.WebReactiveConfigurationSupport;
  * @author Guillaume DROUET
  */
 @SpringBootApplication
-@EnableAutoConfiguration
 public class Application extends WebReactiveConfigurationSupport {
 
     /**
