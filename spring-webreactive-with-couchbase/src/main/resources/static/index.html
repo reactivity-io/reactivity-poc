@@ -6,9 +6,9 @@
 </head>
 <p>
 <p>
+    SSE with Artifact: <ul id="artifacts-events"></ul>
     <button id="send-artifact">New artifact</button>
     <button id="subscribe-artifacts-events">Subscribe</button>
-    SSE with Artifact: <ul id="artifacts-events"></ul>
 </p>
 </p>
 
@@ -25,6 +25,7 @@
             var newElement = document.createElement("li");
             newElement.innerHTML = e.data;
             artifactEvents.appendChild(newElement);
+            window.scrollTo(0,document.body.scrollHeight);
         };
     }
 
