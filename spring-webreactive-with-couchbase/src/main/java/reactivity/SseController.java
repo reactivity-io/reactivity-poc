@@ -86,9 +86,11 @@ public class SseController {
         }
 
         final Artifact a = new Artifact("default", group, categories);
-        repository.add(a);
-        replayProcessor.onNext(sse(a));
-        timeseries(a);
+        repository.add(a).subscribe(d -> {
+            timeseries(a);
+            replayProcessor.onNext(sse(a));
+        });
+
         return a.getTimestamp();
     }
 

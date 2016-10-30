@@ -39,6 +39,7 @@ import java.util.UUID;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+
 /**
  * <p>
  * This repository performs operations on {@link Artifact} documents with {@code RxJava} support.
@@ -51,11 +52,6 @@ public class ReactiveCouchbaseArtifactRepository {
      * The bucket.
      */
     private final AsyncBucket bucket;
-
-    /**
-     * Synchronous bucket.
-     */
-    private Bucket syncBucket;
 
     /**
      * The object mapper.
@@ -74,7 +70,6 @@ public class ReactiveCouchbaseArtifactRepository {
     @Autowired
     public ReactiveCouchbaseArtifactRepository(final Bucket bucket) throws IOException {
         this.bucket = bucket.async();
-        this.syncBucket = bucket;
 
         final String map;
         final String reduce;
@@ -99,12 +94,12 @@ public class ReactiveCouchbaseArtifactRepository {
      * @param artifact the artifact
      * @return the artifact
      */
-    public JsonDocument add(final Artifact artifact) {
+    public Observable<JsonDocument> add(final Artifact artifact) {
         final JsonObject object = JsonObject.create()
                 .put("group", JsonObject.create().put("type", artifact.getGroup().getType()).put("name", artifact.getGroup().getName()))
                 .put("timestamp", artifact.getTimestamp())
                 .put("categories", JsonObject.from(artifact.getCategories()));
-        return syncBucket.upsert(JsonDocument.create(UUID.randomUUID().toString(), object));
+        return bucket.upsert(JsonDocument.create(UUID.randomUUID().toString(), object));
     }
 
     /**
