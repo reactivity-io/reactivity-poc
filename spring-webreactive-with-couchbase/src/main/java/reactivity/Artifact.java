@@ -24,6 +24,11 @@ public class Artifact {
     private long timestamp;
 
     /**
+     * View type.
+     */
+    private String viewType;
+
+    /**
      * The group.
      */
     private Group group;
@@ -37,18 +42,43 @@ public class Artifact {
      * Builds a default instance.
      */
     public Artifact() {
+        viewType = "default";
     }
 
     /**
      * Builds a new instance.
      *
+     * @param viewType the view type
      * @param group the group
      * @param categories the categories
      */
-    public Artifact(final Group group, final Map<String, String> categories) {
+    public Artifact(final String viewType, final Group group, final Map<String, String> categories) {
         this.timestamp = System.currentTimeMillis();
         this.group = group;
         this.categories = categories;
+        this.viewType = viewType;
+    }
+
+    /**
+     * <p>
+     * The view type.
+     * </p>
+     *
+     * @return view type
+     */
+    public String getViewType() {
+        return viewType;
+    }
+
+    /**
+     * <p>
+     * Sets the view type.
+     * </p>
+     *
+     * @param viewType the new view type
+     */
+    public void setViewType(final String viewType) {
+        this.viewType = viewType;
     }
 
     /**
