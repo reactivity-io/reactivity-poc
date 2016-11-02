@@ -22,6 +22,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+import com.couchbase.client.java.document.JsonDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import reactivity.couchbase.ReactiveCouchbaseArtifactRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.ReplayProcessor;
+import rx.Observable;
 import rx.RxReactiveStreams;
 
 /**
@@ -86,10 +88,9 @@ public class SseController {
         }
 
         final Artifact a = new Artifact("default", group, categories);
-        repository.add(a).subscribe(d -> {
-            timeseries(a);
-            replayProcessor.onNext(sse(a));
-        });
+        final Observable<JsonDocument> o = repository.add(a);
+        o.subscribe(d -> replayProcessor.onNext(sse(a)));
+        o.subscribe(d -> timeseries(a));
 
         return a.getTimestamp();
     }
