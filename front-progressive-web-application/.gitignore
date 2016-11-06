@@ -1,0 +1,6 @@
+# Ignore generated project files
+node_modules
+
+# IntelliJ files
+.idea
+*.iml

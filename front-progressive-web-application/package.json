@@ -1,0 +1,16 @@
+{
+  "name": "reactivity-poc-pwa",
+  "version": "0.0.1",
+  "description": "Trying to push most of PWA concepts here.",
+  "main": "app.js",
+  "keywords": [
+    "sse",
+    "express",
+    "node"
+  ],
+  "author": "Quentin Levaslot",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
