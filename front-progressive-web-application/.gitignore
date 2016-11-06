@@ -1,5 +1,7 @@
 # Ignore generated project files
 node_modules
+bower_components
+build
 
 # IntelliJ files
 .idea

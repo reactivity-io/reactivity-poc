@@ -1,0 +1,77 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="my-view1">
+    <template>
+        <div>
+            <h1>View One</h1>
+            <div class="item-add">
+                <input id="inputItem" type="text"/>
+                <button id="addItem">Add item</button>
+            </div>
+            <ul>
+                <template is="dom-repeat" items="{{itemList}}">
+                    <li>{{index}} {{item}}</li>
+                </template>
+            </ul>
+        </div>
+    </template>
+
+    <script>
+        class MyView1 extends Polymer.Element {
+            static get is() {
+                return 'my-view1'
+            }
+
+            static get config() {
+                return {
+                    properties: {
+                        itemList: {
+                            type: Array,
+                            value: []
+                        }
+                    }
+                }
+            }
+
+            constructor() {
+                super();
+                console.log('created');
+            }
+
+            ready() {
+                this.listenToStream();
+                super.ready();
+                this.$.addItem.addEventListener('click', this.addItem.bind(this));
+
+                console.log('ready');
+            }
+
+            listenToStream() {
+                if (!!window.EventSource) {
+                    const source = new EventSource('/stream');
+
+                    source.addEventListener('message', function (e) {
+                        this.itemList = JSON.parse(e.data);
+                    }.bind(this), false);
+
+                    source.addEventListener('open', function (e) {
+                        console.log("Connection opened");
+                    }, false);
+
+                    source.addEventListener('error', function (e) {
+                        if (e.readyState == EventSource.CLOSED) {
+                            console.log("Connection closed")
+                        }
+                    }, false)
+                }
+            }
+
+            addItem() {
+                const req = new XMLHttpRequest();
+                req.open('GET', `./item?i=${this.$.inputItem.value}`, true);
+                req.send(null);
+            }
+        }
+        customElements.define(MyView1.is, MyView1);
+    </script>
+</dom-module>

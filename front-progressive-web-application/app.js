@@ -6,7 +6,7 @@ const app = express(),
   items = [];
 
 // Static server
-app.use('/', express.static(__dirname + '/app'));
+app.use('/', express.static(__dirname + '/build/unbundled'));
 
 // Enable Server Send Events
 app.use(sse);
