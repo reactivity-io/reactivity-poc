@@ -64,7 +64,7 @@ public class SseController {
      */
     @PostMapping("/sse/artifacts")
     long artifact() {
-        final Map<String, String> categories = new HashMap<>();
+        final Map<String, Object> categories = new HashMap<>();
         final BiConsumer<String, String[]> populator = (key, values) -> {
             final String value = values[ThreadLocalRandom.current().nextInt(0, values.length)];
 

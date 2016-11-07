@@ -16,12 +16,12 @@ import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.json.JsonArray;
 import com.couchbase.client.java.document.json.JsonObject;
-import com.couchbase.client.java.query.Select;
-import com.couchbase.client.java.query.Statement;
-import com.couchbase.client.java.query.dsl.Expression;
-import com.couchbase.client.java.query.dsl.Sort;
-import com.couchbase.client.java.view.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.couchbase.client.java.view.AsyncViewResult;
+import com.couchbase.client.java.view.DefaultView;
+import com.couchbase.client.java.view.DesignDocument;
+import com.couchbase.client.java.view.Stale;
+import com.couchbase.client.java.view.View;
+import com.couchbase.client.java.view.ViewQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
@@ -54,12 +54,6 @@ public class ReactiveCouchbaseArtifactRepository {
     private final AsyncBucket bucket;
 
     /**
-     * The object mapper.
-     */
-    @Autowired
-    private ObjectMapper mapper;
-
-    /**
      * <p>
      * Builds a new repository.
      * </p>
@@ -71,8 +65,8 @@ public class ReactiveCouchbaseArtifactRepository {
     public ReactiveCouchbaseArtifactRepository(final Bucket bucket) throws IOException {
         this.bucket = bucket.async();
 
-        final String map;
-        final String reduce;
+        String map;
+        String reduce;
 
         try (final Reader in = new InputStreamReader(new ClassPathResource("couchbase/views/color/map.js").getInputStream())) {
             map = FileCopyUtils.copyToString(in);
@@ -82,7 +76,13 @@ public class ReactiveCouchbaseArtifactRepository {
             reduce = FileCopyUtils.copyToString(in);
         }
 
-        final List<View> views = Arrays.asList(DefaultView.create("color", map, reduce));
+        View color = DefaultView.create("color", map, reduce);
+
+        try (final Reader in = new InputStreamReader(new ClassPathResource("couchbase/views/default/map.js").getInputStream())) {
+            map = FileCopyUtils.copyToString(in);
+        }
+
+        final List<View> views = Arrays.asList(DefaultView.create("default", map), color);
         bucket.bucketManager().upsertDesignDocument(DesignDocument.create("artifact", views));
     }
 
@@ -127,11 +127,11 @@ public class ReactiveCouchbaseArtifactRepository {
 
                         // Map each internal JSON object to an Artifact
                         return result.rows().map(row -> {
-                            final Map<String, String> count = new HashMap<>();
+                            final Map<String, Object> count = new HashMap<>();
                             final JsonObject countObject = JsonObject.class.cast(row.value()).getObject("count");
 
                             for (final String name : JsonObject.class.cast(countObject).getNames()) {
-                                count.put(name, String.valueOf(countObject.getInt(name)));
+                                count.put(name, countObject.getInt(name));
                             }
 
                             final Artifact retval = new Artifact("timeseries", new Group(row.key().toString(), "color"), count);
@@ -140,10 +140,7 @@ public class ReactiveCouchbaseArtifactRepository {
                         });
                     } else {
                         // Statement failed
-                        return result.error().flatMap(
-                                jsonErrors -> Observable.<Artifact>error(
-                                        new IllegalStateException(
-                                                jsonErrors.getInt("code") + ": " + jsonErrors.getString("msg"))));
+                        return error(result);
                     }
                 });
     }
@@ -157,34 +154,44 @@ public class ReactiveCouchbaseArtifactRepository {
      * @return the artifacts
      */
     public Observable<Artifact> list(final Long timestamp) {
-        // Selects the artifacts by checking their timestamp
-        final Statement statement = Select.select("categories,`group`,timestamp")
-                .from("artifacts")
-                .where(Expression.x("timestamp").gt(timestamp))
-                .orderBy(Sort.asc("timestamp"));
+
+        // stale=false will wait that a document has been updated in the view before getting the result
+        final ViewQuery viewQuery = ViewQuery.from("artifact", "default")
+                .startKey(JsonArray.from(timestamp + 1)) // timestamp + 1 means "greater than"
+                .stale(Stale.FALSE);
 
         return this.bucket
-                .query(statement)
+                .query(viewQuery)
                 .flatMap(result -> {
 
                     // Statement executed successfully
-                    if (result.parseSuccess()) {
+                    if (result.success()) {
 
                         // Map each internal JSON object to an Artifact
                         return result.rows().map(row -> {
-                            try {
-                                return mapper.readValue(row.byteValue(), Artifact.class);
-                            } catch (IOException e) {
-                                throw new IllegalStateException(e);
-                            }
+                            final JsonObject o = JsonObject.class.cast(row.value());
+                            final JsonObject g = o.getObject("group");
+                            return new Artifact("default", new Group(g.getString("type"), g.getString("name")), o.getObject("categories").toMap());
                         });
                     } else {
                         // Statement failed
-                        return result.errors().flatMap(
-                                jsonErrors -> Observable.<Artifact>error(
-                                        new IllegalStateException(
-                                                jsonErrors.getInt("code") + ": " + jsonErrors.getString("msg"))));
+                        return error(result);
                     }
                 });
+    }
+
+    /**
+     * <p>
+     * Generates an error for the given result.
+     * </p>
+     *
+     * @param asyncViewResult the result
+     * @return the observable error
+     */
+    private Observable<Artifact> error(final AsyncViewResult asyncViewResult) {
+        return asyncViewResult.error().flatMap(
+                jsonErrors -> Observable.<Artifact>error(
+                        new IllegalStateException(
+                                jsonErrors.getInt("code") + ": " + jsonErrors.getString("msg"))));
     }
 }

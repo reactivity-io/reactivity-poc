@@ -36,7 +36,7 @@ public class Artifact {
     /**
      * The categories.
      */
-    private Map<String, String> categories;
+    private Map<String, Object> categories;
 
     /**
      * Builds a default instance.
@@ -52,7 +52,7 @@ public class Artifact {
      * @param group the group
      * @param categories the categories
      */
-    public Artifact(final String viewType, final Group group, final Map<String, String> categories) {
+    public Artifact(final String viewType, final Group group, final Map<String, Object> categories) {
         this.timestamp = System.currentTimeMillis();
         this.group = group;
         this.categories = categories;
@@ -132,7 +132,7 @@ public class Artifact {
      *
      * @return the categories
      */
-    public Map<String, String> getCategories() {
+    public Map<String, Object> getCategories() {
         return categories;
     }
 
@@ -143,7 +143,7 @@ public class Artifact {
      *
      * @param categories the new categories
      */
-    public void setCategories(final Map<String, String> categories) {
+    public void setCategories(final Map<String, Object> categories) {
         this.categories = categories;
     }
 }
