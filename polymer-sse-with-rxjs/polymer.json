@@ -1,0 +1,19 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/my-app.html",
+  "fragments": [
+    "src/components/app-card.html",
+    "src/components/app-orga.html",
+    "src/components/app-view.html"
+  ],
+  "sources": [
+    "src/**/*",
+    "images/**/*"
+  ],
+  "extraDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.js",
+    "bower_components/rxjs/dist/rx.core.js",
+    "node_modules/lodash/lodash.min.js"
+  ]
+}

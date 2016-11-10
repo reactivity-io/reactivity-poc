@@ -1,0 +1,24 @@
+{
+  "name": "web-front",
+  "version": "0.0.1",
+  "description": "Web application to manage the activity that matters",
+  "main": "main.js",
+  "scripts": {
+    "start": "gulp",
+    "lint": "./node_modules/.bin/eslint ."
+  },
+  "author": "Nathan DAMIE",
+  "devDependencies": {
+    "browser-sync": "^2.17.5",
+    "del": "^2.2.2",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-if": "^2.0.2",
+    "merge-stream": "^1.0.0",
+    "polymer-build": "^0.5.0",
+    "polymer-cli": "^0.17.0",
+    "require-dir": "^0.3.1"
+  },
+  "dependencies": {
+    "lodash": "^4.16.6"
+  }
+}

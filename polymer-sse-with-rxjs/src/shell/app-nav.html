@@ -1,0 +1,65 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="app-nav">
+  <template>
+    <style>
+      .header {
+        background-color: var(--app-primary-color);
+        height: 64px;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1000;
+        font-weight: 400;
+        font-size: 1.5em;
+        display: flex;
+        align-items: center;
+        color: white;
+        padding: 0 64px;
+        overflow: hidden;
+        justify-content: space-between;
+      }
+
+      .horizontal-wrapper {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo {
+        width: auto;
+        height: 55px;
+        margin-right: 10px;
+      }
+      a {
+        text-decoration: none;
+        color: white;
+      }
+    </style>
+    <div class="header">
+      <div class="horizontal-wrapper">
+        <a href="/my-organisations" class="horizontal-wrapper">
+          <img class="logo" src="./idea.png" alt="logo"/>
+          <span>Reactivity</span>
+        </a>
+
+      </div>
+      <div class="horizontal-wrapper">
+        <a href="/my-settings">Settings</a>
+      </div>
+    </div>
+  </template>
+  <script>
+    // Extend Polymer.Element base class
+    class AppNav extends Polymer.Element {
+      static get is() {
+        return 'app-nav';
+      }
+
+      constructor() {
+        super();
+      }
+    }
+    // Register custom element definition using standard platform API
+    customElements.define(AppNav.is, AppNav);
+  </script>
+</dom-module>

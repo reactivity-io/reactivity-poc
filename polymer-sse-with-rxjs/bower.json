@@ -1,0 +1,16 @@
+{
+  "name": "web-front",
+  "version": "0.0.1",
+  "description": "Web application to manage the activity that matters",
+  "author": "Nathan DAMIE",
+  "dependencies": {
+    "polymer": "Polymer/polymer#2.0-preview",
+    "app-route": "PolymerElements/app-route#2.0-preview",
+    "iron-pages": "PolymerElements/iron-pages#2.0-preview",
+    "rxjs": "^4.1.0"
+  },
+  "resolutions": {
+    "polymer": "2.0-preview",
+    "webcomponentsjs": "v1"
+  }
+}

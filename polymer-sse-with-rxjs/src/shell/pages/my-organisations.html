@@ -1,0 +1,99 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../components/app-orga.html">
+
+<dom-module id="orga-wrapper">
+  <template>
+    <style>
+      #content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        background-color: var(--app-secondary-color);
+      }
+
+    </style>
+    <div id="content">
+      <template is="dom-repeat" items="{{organisations}}" as="orga">
+        <app-orga first="{{orga.attributes.first}}" last="{{orga.attributes.last}}"></app-orga>
+      </template>
+    </div>
+  </template>
+  <script src="../../utils/component.util.js"></script>
+  <script src="../../utils/eventSource.util.js"></script>
+  <script src="../../../node_modules/lodash/lodash.min.js"></script>
+  <script>
+    // Extend Polymer.Element base class
+    class OrgaWrapper extends Polymer.Element {
+      static get is() {
+        return 'orga-wrapper';
+      }
+
+      static get config() {
+        return {
+          properties: {
+            route: {
+              type: Object
+            }
+          }
+        }
+      }
+
+      constructor() {
+        super();
+        this.organisations = [];
+      }
+
+
+      connectedCallback() {
+        super.connectedCallback();
+
+        const observable = ObservableFromEventSource("http://localhost/stream");
+        observable.subscribe((e) => {
+          const json = JSON.parse(e.data);
+          switch (json.type) {
+            case "list":
+              /**
+               * Need To think about data :/
+               */
+              const groupe = _.groupBy(json.data, (card) => {
+                return card.group.name;
+              });
+              for (let attr in groupe) {
+                if (groupe.hasOwnProperty(attr)) {
+                  const newOrga = {
+                    name: 'app-orga',
+                    location: 'src/components/app-orga.html',
+                    attributes: { first: attr, last: groupe[attr].length }
+                  };
+
+                  this.organisations.push(newOrga);
+                }
+              }
+              this.setProperties({ organisations: this.organisations });
+
+//              this.organisations.forEach((item) => {
+//                ComponentLoader(item, this.$.content);
+//              });
+              break;
+            case "add":
+//              this.organisations.push(json.data);
+//              ComponentLoader(item, this.$.content);
+              break;
+            case "remove":
+              //todo
+              break;
+            case "update":
+              //todo
+              break;
+          }
+          return e.target.value;
+        });
+      }
+    }
+    // Register custom element definition using standard platform API
+    customElements.define(OrgaWrapper.is, OrgaWrapper);
+  </script>
+</dom-module>

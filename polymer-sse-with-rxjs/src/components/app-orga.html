@@ -1,0 +1,222 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="app-orga">
+  <template>
+    <style>
+      div.business-card {
+        height: 427px;
+        width: 320px;
+        -webkit-perspective: 1000;
+        perspective: 1000;
+        margin: 25px 5px 15px 5px;
+      }
+
+      .disabled {
+        filter: blur(1px) grayscale(1);
+      }
+
+      /*div.business-card:hover .flipper, div.business-card.hover .flipper {*/
+      /*-webkit-transform: rotateY(180deg) rotateZ(90deg);*/
+      /*transform: rotateY(180deg) rotateZ(90deg);*/
+      /*}*/
+
+      div.flipper {
+        -webkit-transition: 0.6s;
+        transition: 0.6s;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        position: relative;
+        -webkit-transform-origin: center 160px;
+        transform-origin: center 160px;
+      }
+
+      div.front, div.back {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 427px;
+        width: 320px;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.75);
+      }
+
+      div.front {
+        background-color: white;
+        z-index: 0;
+      }
+
+      div.front:before, div.front:after {
+        display: block;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-width: 160px;
+        border-style: solid;
+        border-color: transparent;
+      }
+
+      div.front:before {
+        border-top-color: #429be9;
+        border-left-color: #429be9;
+        z-index: 2;
+      }
+
+      div.front:after {
+        border-top-color: #1e88e5;
+        border-right-color: #1e88e5;
+      }
+
+      div.front div.name {
+        position: absolute;
+        bottom: 8.5px;
+        left: 85px;
+      }
+
+      div.front div.name span {
+        display: block;
+        font-size: 40px;
+        line-height: 45px;
+      }
+
+      div.front div.name span.first {
+        color: #2055a8;
+      }
+
+      div.front div.name span.last {
+        color: #288FBD;
+      }
+
+      div.front div.name span.title {
+        font-size: 20px;
+        line-height: 20px;
+      }
+
+      div.back {
+        background-color: #005D8C;
+        color: white;
+        width: 427px;
+        height: 320px;
+        box-sizing: border-box;
+        -webkit-transform: rotateY(180deg) rotateZ(90deg);
+        transform: rotateY(180deg) rotateZ(90deg);
+      }
+
+      div.back div.container-sm {
+        float: left;
+        width: 40%;
+        height: 100%;
+        position: relative;
+      }
+
+      div.back div.container-lg {
+        float: left;
+        width: 60%;
+        margin-top: 2rem;
+      }
+
+      div.back figure.logo-white {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 120px;
+        height: 120px;
+        display: block;
+        margin: -60px -60px;
+      }
+
+      div.back figure.logo-white:before, div.back figure.logo-white:after {
+        display: block;
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-color: transparent;
+      }
+
+      div.back figure.logo-white:before {
+        top: 0;
+        left: 0;
+        border-width: 60px;
+        border-top-color: white;
+        border-left-color: white;
+        z-index: 2;
+      }
+
+      div.back figure.logo-white:after {
+        bottom: 0;
+        right: 0;
+        border-width: 56px;
+        border-right-color: white;
+      }
+
+      div.back a {
+        color: white;
+        text-decoration: none;
+        display: block;
+      }
+
+      div.back a:hover {
+        text-decoration: underline;
+      }
+
+      div.back ul.social {
+        font-size: 1.25rem;
+      }
+
+      div.back ul.social li {
+        margin-top: 1rem;
+      }
+
+      div.back ul.social li:first-child {
+        margin-top: 2rem;
+      }
+
+    </style>
+    <div id="card" class="business-card" on-click="handleTap">
+      <div class="flipper">
+        <div class="front">
+          <div class="name">
+            <span class="first">{{first}}</span>
+            <span class="last">{{last}}</span>
+            <span class="title">{{title}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    // Extend Polymer.Element base class
+    class AppOrga extends Polymer.Element {
+      static get is() {
+        return 'app-orga';
+      }
+
+      static get config() {
+        return {
+          properties: {
+            first: String,
+            last: String,
+            title: String,
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+        if (!this.first) {
+          this.$.card.className += ' disabled';
+        }
+      }
+
+      handleTap() {
+        console.log("TOP");
+        document.dispatchEvent(new CustomEvent('routeChange', {"detail": {"page":'/reactivity'} }), { "bubbles": true});
+      }
+    }
+    // Register custom element definition using standard platform API
+    customElements.define(AppOrga.is, AppOrga);
+  </script>
+</dom-module>

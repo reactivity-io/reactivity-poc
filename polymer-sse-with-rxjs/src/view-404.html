@@ -1,0 +1,26 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="view-404">
+  <template>
+    <style>
+      #content {
+        background-color: var(--app-secondary-color);
+        color: red;
+      }
+
+    </style>
+    <div id="content">
+      WHYYYYYYYYYY ????????
+    </div>
+  </template>
+  <script>
+    // Extend Polymer.Element base class
+    class View404 extends Polymer.Element {
+      static get is() {
+        return 'view-404';
+      }
+    }
+    // Register custom element definition using standard platform API
+    customElements.define(View404.is, View404);
+  </script>
+</dom-module>

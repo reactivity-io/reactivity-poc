@@ -1,0 +1,41 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="shell/app-nav.html">
+<link rel="import" href="shell/app-dashboard.html">
+
+<dom-module id="my-app">
+  <template>
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        background-color: var(--app-secondary-color);
+      }
+      :host {
+        --app-primary-color: rgb(232, 52, 90);
+        --app-secondary-color: rgb(38, 50, 56);
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+      }
+      app-dashboard {
+        top: 64px;
+        position: relative;
+      }
+    </style>
+
+    <app-nav></app-nav>
+    <app-dashboard></app-dashboard>
+  </template>
+
+  <script>
+    // Extend Polymer.Element base class
+    class MyApp extends Polymer.Element {
+      static get is() {
+        return 'my-app';
+      }
+    }
+
+    // Register custom element definition using standard platform API
+    customElements.define(MyApp.is, MyApp);
+  </script>
+</dom-module>

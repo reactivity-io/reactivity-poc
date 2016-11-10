@@ -1,0 +1,26 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="my-settings">
+  <template>
+    <style>
+      #content {
+        background-color: var(--app-secondary-color);
+        color:white
+      }
+
+    </style>
+    <div id="content">
+      my-settings
+    </div>
+  </template>
+  <script>
+    // Extend Polymer.Element base class
+    class MySettings extends Polymer.Element {
+      static get is() {
+        return 'my-settings';
+      }
+    }
+    // Register custom element definition using standard platform API
+    customElements.define(MySettings.is, MySettings);
+  </script>
+</dom-module>
