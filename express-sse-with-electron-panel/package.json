@@ -1,0 +1,51 @@
+{
+  "name": "sse-panel",
+  "version": "0.0.1",
+  "description": "Simple http server with SSE ",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "watchify": "gulp",
+    "lint": "./node_modules/.bin/eslint .",
+    "dashboard": "nodejs-dashboard electron ."
+  },
+  "author": "Nathan DAMIE",
+  "dependencies": {
+    "electron": "^1.4.3",
+    "express": "^4.14.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.8.1",
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.5.0",
+    "babel-eslint": "^7.0.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-2": "^6.17.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
+    "nodejs-dashboard": "^0.1.0",
+    "electron-prebuilt": "^1.4.3",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^2.0.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.4.0",
+    "eslintify": "^3.0.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-if": "^2.0.1",
+    "gulp-postcss": "^6.2.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0",
+    "precss": "^1.4.0",
+    "require-dir": "^0.3.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0"
+  }
+}

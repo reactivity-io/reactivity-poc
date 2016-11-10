@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Server-Sent Events Demo</title>
+    <meta charset="UTF-8"/>
+    <script>
+        window.addEventListener("load", function () {
+            if (!!window.EventSource) {
+                var source = new EventSource("stream");
+                source.addEventListener('open', function (e) {
+                    console.log('connected', e);
+                });
+
+                source.addEventListener('message', function (event) {
+                    console.log(event.type);
+                    const data = JSON.parse(event.data);
+                    document.getElementById('content').innerHTML += "<br>" + data.type + JSON.stringify(data.data);
+                });
+
+                source.addEventListener("error", function (event) {
+                    if (event.target.readyState === EventSource.CLOSED) {
+                        source.close();
+                    }
+                }, false);
+            }
+        });
+    </script>
+</head>
+<body>
+<span id="content">SSE Events :</span>
+</body>
+</html>
