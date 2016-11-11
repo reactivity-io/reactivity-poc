@@ -177,14 +177,13 @@
       <div class="flipper">
         <div class="front">
           <div class="name">
-            <span class="first">{{first}}</span>
-            <span class="last">{{last}}</span>
-            <span class="title">{{title}}</span>
+            <span class="first">{{name}}</span>
+            <span class="last">{{number}}</span>
+            <span class="title">{{date}}</span>
           </div>
         </div>
       </div>
     </div>
-
   </template>
 
   <script>
@@ -197,16 +196,22 @@
       static get config() {
         return {
           properties: {
-            first: String,
-            last: String,
-            title: String,
+            name: {
+              type: String
+            },
+            number: {
+              type: Number
+            },
+            date: {
+              type: Number
+            },
           }
         };
       }
 
       ready() {
         super.ready();
-        if (!this.first) {
+        if (!this.name) {
           this.$.card.className += ' disabled';
         }
       }

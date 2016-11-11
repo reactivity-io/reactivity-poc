@@ -28,3 +28,20 @@ function ComponentLoader(item, content) {
     }
   );
 }
+// <!--This is a route-->
+// <!--super.connectedCallback();-->
+// <!--//        if (this.route && this.route.path === '') {-->
+// <!--//          this.route.path = '/orga';-->
+// <!--//          this.setProperties({ route: this.route });-->
+// <!--//        }-->
+// <!--//        ComponentLoader(ManageRoute(this.route.path), this.$.content);-->
+// <!--//-->
+// <!--//        document.addEventListener('routeChange', (e) => {-->
+// <!--//          this.route.path = `${this.route.path}${e.detail.page}`;-->
+// <!--//          this.setProperties({ route: this.route });-->
+// <!--//        });-->
+// <!--//-->
+// <!--//        window.addEventListener('location-changed', () => {-->
+// <!--//          ComponentLoader(ManageRoute(this.route.path), this.$.content);-->
+// <!--//        });-->
+

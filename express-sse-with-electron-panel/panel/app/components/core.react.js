@@ -7,19 +7,29 @@ function Core() {
     <div className="core">
       <Header/>
       <Dashboard
-        addSticky={() => {
+        addCard={() => {
           const xhr = new XMLHttpRequest();
-          xhr.open('POST', 'http://localhost/add', true);
+          xhr.open('POST', 'http://localhost/addCard', true);
           xhr.send();
         }}
-        updateSticky={() => {
+        updateCard={() => {
           const xhr = new XMLHttpRequest();
-          xhr.open('PUT', 'http://localhost/update', true);
+          xhr.open('PUT', 'http://localhost/updateCard', true);
           xhr.send();
         }}
-        removeSticky={() => {
+        removeCard={() => {
           const xhr = new XMLHttpRequest();
-          xhr.open('DELETE', 'http://localhost/delete', true);
+          xhr.open('DELETE', 'http://localhost/deleteCard', true);
+          xhr.send();
+        }}
+        addOrga={() => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', 'http://localhost/addOrga', true);
+          xhr.send();
+        }}
+        removeOrga={() => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('DELETE', 'http://localhost/deleteOrga', true);
           xhr.send();
         }}
       />

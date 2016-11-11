@@ -1,0 +1,143 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/hardware-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html  ">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<dom-module id="app-orga">
+  <template>
+    <style is="custom-style">
+
+      paper-card {
+        width: 100%;
+      }
+
+      iron-icon {
+        display: -ms-inline-flexbox;
+        display: -webkit-inline-flex;
+        display: inline-flex;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        position: relative;
+        vertical-align: middle;
+        fill: currentcolor;
+        stroke: none;
+        width: 24px;
+        height: 24px;
+      }
+
+      .horizontal {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .justified {
+        justify-content: space-between;
+      }
+
+      paper-checkbox {
+        display: block;
+        margin-bottom: 4px;
+        --paper-checkbox-label-color: white;
+        --paper-checkbox-unchecked-color: white;
+      }
+
+      .cafe-header {
+        @apply(--paper-font-headline);
+        text-transform: capitalize;
+      }
+
+      .cafe-light {
+        color: var(--paper-grey-600);
+      }
+
+      .cafe-location {
+        float: right;
+        font-size: 15px;
+        vertical-align: middle;
+
+      }
+
+      .cafe-reserve {
+        color: var(--google-blue-500);
+      }
+
+      iron-icon.mood {
+        --iron-icon-width: 16px;
+        --iron-icon-height: 16px;
+        color: rgb(15, 157, 88);
+      }
+
+      iron-icon.mood:last-of-type {
+        color: var(--app-secondary-color);
+      }
+    </style>
+    <paper-card image="{{image}}" alt="reactivx">
+      <div class="card-content">
+        <div class="cafe-header">{{name}}
+          <div class="cafe-location cafe-light">
+            <iron-icon icon="editor:attach-file"></iron-icon>
+            <span>{{number}}</span>
+          </div>
+        </div>
+        <div class="cafe-rating">
+          <iron-icon class="mood" icon="social:mood"></iron-icon>
+          <iron-icon class="mood" icon="social:mood"></iron-icon>
+          <iron-icon class="mood" icon="social:mood"></iron-icon>
+          <iron-icon class="mood" icon="social:mood"></iron-icon>
+          <iron-icon class="modd" icon="social:mood"></iron-icon>
+        </div>
+        <!--<p>$・Italian, Cafe</p>-->
+        <p class="cafe-light">{{description}}</p>
+      </div>
+      <div class="card-actions">
+        <!--<p>Tonight's availability</p>-->
+        <!--<div class="horizontal justified">-->
+        <!--<paper-icon-button icon="icons:event"></paper-icon-button>-->
+        <!--<paper-button>5:30PM</paper-button>-->
+        <!--<paper-button>7:30PM</paper-button>-->
+        <!--<paper-button>9:00PM</paper-button>-->
+        <!--</div>-->
+        <paper-button class="cafe-reserve">Reserve</paper-button>
+      </div>
+    </paper-card>
+  </template>
+
+  <script>
+    // Extend Polymer.Element base class
+    class AppOrga extends Polymer.Element {
+      static get is() {
+        return 'app-orga';
+      }
+
+      static get config() {
+        return {
+          properties: {
+            name: String,
+            number: Number,
+            date: Number,
+            image: String,
+            description: String,
+          }
+        };
+      }
+
+      handleTap() {
+        console.log("TAP");
+        document.dispatchEvent(new CustomEvent('routeChange', { "detail": { "page": '/reactivity' } }), { "bubbles": true });
+      }
+    }
+    // Register custom element definition using standard platform API
+    customElements.define(AppOrga.is, AppOrga);
+  </script>
+</dom-module>

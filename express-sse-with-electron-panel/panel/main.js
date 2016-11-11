@@ -6,7 +6,7 @@ let mainWindow;
 
 function createWindow() {
   const notifWidth = 470;
-  const notifHeight = 315;
+  const notifHeight = 415;
   // Create the browser window.
   mainWindow = new BrowserWindow({
     x: 0,

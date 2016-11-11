@@ -8,7 +8,7 @@ gulp.task('serve', function () {
   // Serve files from the root of this project
   browserSync.init({
     server: {
-      baseDir: "./build/unbundled/",
+      baseDir: "./",
       index: "index.html",
       middleware: [historyApiFallback()]
     },

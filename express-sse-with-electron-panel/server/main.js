@@ -37,18 +37,28 @@ app.get('/stream', (req, res) => {
   Factory.addListener(req, res);
 });
 
-app.post('/add', (req, res) => {
-  Factory.add();
+app.post('/addOrga', (req, res) => {
+  Factory.addOrga();
   res.sendStatus(200);
 });
 
-app.put('/update', (req, res) => {
-  Factory.update();
+app.delete('/deleteOrga', (req, res) => {
+  Factory.deleteOrga();
   res.sendStatus(200);
 });
 
-app.delete('/delete', (req, res) => {
-  Factory.delete();
+app.post('/addCard', (req, res) => {
+  Factory.addCard();
+  res.sendStatus(200);
+});
+
+app.put('/updateCard', (req, res) => {
+  Factory.updateCard();
+  res.sendStatus(200);
+});
+
+app.delete('/deleteCard', (req, res) => {
+  Factory.deleteCard();
   res.sendStatus(200);
 });
 

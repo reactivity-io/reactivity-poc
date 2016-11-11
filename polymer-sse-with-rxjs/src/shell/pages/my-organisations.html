@@ -1,5 +1,5 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../components/app-orga.html">
+<link rel="import" href="../../components/app-orga2.html">
 
 <dom-module id="orga-wrapper">
   <template>
@@ -14,10 +14,24 @@
         background-color: var(--app-secondary-color);
       }
 
+      app-orga {
+        max-width: calc(25% - 35px);
+        margin: 20px 0;
+      }
+
+      .hidden {
+        display: none;
+      }
     </style>
     <div id="content">
-      <template is="dom-repeat" items="{{organisations}}" as="orga">
-        <app-orga first="{{orga.attributes.first}}" last="{{orga.attributes.last}}"></app-orga>
+      <template class="hidden" is="dom-repeat" items="{{organisations}}" as="orga">
+        <app-orga name="{{orga.attributes.name}}"
+                  number="{{orga.attributes.itemNumber}}"
+                  date="{{orga.attributes.creationDate}}"
+                  image="{{orga.attributes.image}}"
+                  description="{{orga.attributes.description}}">
+
+        </app-orga>
       </template>
     </div>
   </template>
@@ -25,7 +39,6 @@
   <script src="../../utils/eventSource.util.js"></script>
   <script src="../../../node_modules/lodash/lodash.min.js"></script>
   <script>
-    // Extend Polymer.Element base class
     class OrgaWrapper extends Polymer.Element {
       static get is() {
         return 'orga-wrapper';
@@ -36,7 +49,7 @@
           properties: {
             route: {
               type: Object
-            }
+            },
           }
         }
       }
@@ -46,50 +59,31 @@
         this.organisations = [];
       }
 
-
       connectedCallback() {
         super.connectedCallback();
 
-        const observable = ObservableFromEventSource("http://localhost/stream");
-        observable.subscribe((e) => {
-          const json = JSON.parse(e.data);
-          switch (json.type) {
-            case "list":
-              /**
-               * Need To think about data :/
-               */
-              const groupe = _.groupBy(json.data, (card) => {
-                return card.group.name;
-              });
-              for (let attr in groupe) {
-                if (groupe.hasOwnProperty(attr)) {
-                  const newOrga = {
-                    name: 'app-orga',
-                    location: 'src/components/app-orga.html',
-                    attributes: { first: attr, last: groupe[attr].length }
-                  };
-
-                  this.organisations.push(newOrga);
-                }
-              }
-              this.setProperties({ organisations: this.organisations });
-
-//              this.organisations.forEach((item) => {
-//                ComponentLoader(item, this.$.content);
-//              });
-              break;
-            case "add":
-//              this.organisations.push(json.data);
-//              ComponentLoader(item, this.$.content);
-              break;
-            case "remove":
-              //todo
-              break;
-            case "update":
-              //todo
-              break;
+        const manager = {
+          "init-orga": (e) => {
+            this.setProperties({ organisations: JSON.parse(e.data) });
+          },
+          "add-orga": (e) => {
+            const data = JSON.parse(e.data);
+            this.organisations.push(data);
+            this.setProperties({ organisations: this.organisations });
+          },
+          "delete-orga": (e) => {
+            const data = JSON.parse(e.data);
+            this.organisations.pop();
+            this.setProperties({ organisations: this.organisations });
           }
-          return e.target.value;
+        };
+
+        //Open the sse connection + create observable for each property of the given manager
+        const OrgaManager = new EventSourceManager("http://localhost/stream", manager);
+
+        //Can subscribse to the "Open" EventSource's event
+        OrgaManager.sourceObservable.subscribe(() => {
+          console.log("%c SSE connected", "font-size:22px;text-shadow: 0 0 3px #FF0000, 0 0 5px rgb(232, 52, 90);");
         });
       }
     }

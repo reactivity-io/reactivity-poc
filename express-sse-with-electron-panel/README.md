@@ -17,6 +17,13 @@ npm install
 ```
 
 ### Launch server with panel
+You need to lunch the compilation once
+```sh
+npm run watchify
+```
+
+stop the process when finish
+
 ```sh
 npm start
 ```
