@@ -5,8 +5,8 @@ const polymer = require('polymer-build');
 
 const polymerJSON = require('../polymer.json');
 const project = new polymer.PolymerProject(polymerJSON);
-const bundledPath = path.join(global.config.build.rootDirectory, global.config.build.bundledDirectory);
-const unbundledPath = path.join(global.config.build.rootDirectory, global.config.build.unbundledDirectory);
+const bundledPath = `${global.config.build.rootDirectory}/${global.config.build.bundledDirectory}`;
+const unbundledPath = `${global.config.build.rootDirectory}/${global.config.build.unbundledDirectory}`;
 
 // This is the heart of polymer-build, and exposes much of the
 // work that Polymer CLI usually does for you
@@ -98,9 +98,10 @@ function serviceWorker() {
 
 // Returns a Promise to generate a service worker for bundled output
 function writeBundledServiceWorker() {
+  global.config.swPrecacheConfig.stripPrefix = bundledPath;
   return polymer.addServiceWorker({
     project: project,
-    buildRoot: "/",//bundledPath, <- when we can decide server-side if we want the bundled or unbundled version
+    buildRoot: bundledPath,
     swPrecacheConfig: global.config.swPrecacheConfig,
     path: global.config.serviceWorkerPath,
     bundled: true
@@ -109,9 +110,10 @@ function writeBundledServiceWorker() {
 
 // Returns a Promise to generate a service worker for unbundled output
 function writeUnbundledServiceWorker() {
+  global.config.swPrecacheConfig.stripPrefix = unbundledPath;
   return polymer.addServiceWorker({
     project: project,
-    buildRoot: "/",///unbundledPath, <- when we can decide server-side if we want the bundled or unbundled version
+    buildRoot: unbundledPath,
     swPrecacheConfig: global.config.swPrecacheConfig,
     path: global.config.serviceWorkerPath
   });

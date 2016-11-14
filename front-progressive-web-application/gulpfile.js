@@ -16,7 +16,7 @@ global.config = {
   serviceWorkerPath: 'service-worker.js',
   // Service Worker precache options based on https://github.com/GoogleChrome/sw-precache#options-parameter
   swPrecacheConfig: {
-    navigateFallback: '/index.html'
+    navigateFallback: '/index.html',
   }
 };
 
