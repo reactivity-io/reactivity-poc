@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="my-view1">
-    <dom-repeat>
+    <template>
         <div>
             <h1>View One</h1>
             <div class="item-add">
@@ -10,7 +10,9 @@
             </div>
             <ul>
                 <dom-repeat items="{{itemList}}">
-                    <li>{{index}} {{item}}</li>
+                    <template>
+                        <li>{{index}} {{item}}</li>
+                    </template>
                 </dom-repeat>
             </ul>
         </div>
