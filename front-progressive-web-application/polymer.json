@@ -1,0 +1,17 @@
+{
+  "entrypoint": "index.html",
+  "shell": "app/my-app.html",
+  "fragments": [
+    "app/components/my-view1.html",
+    "app/components/my-view2.html",
+    "app/components/my-view404.html"
+  ],
+  "sources": [
+    "app/**/*",
+    "static/**/*"
+  ],
+  "extraDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.js"
+  ]
+}

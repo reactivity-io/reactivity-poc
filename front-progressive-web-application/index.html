@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>Progressive Web Application</title>
+    <meta name="description" content="PWA proof of concept">
+
+    <!-- Manifest -->
+
+    <link rel="icon" href="/static/favicons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/static/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/static/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#2196f3">
+    <meta name="theme-color" content="#2196f3">
+
+
+    <script>
+        // Setup Polymer options
+        window.Polymer = {
+            dom: 'shadow',
+            lazyRegister: true
+        };
+
+        // Load webcomponentsjs polyfill if browser does not support native Web Components
+        (function() {
+            'use strict';
+
+            var onload = function() {
+                // For native Imports, manually fire WebComponentsReady so user code
+                // can use the same code path for native and polyfill'd imports.
+                if (!window.HTMLImports) {
+                    document.dispatchEvent(
+                            new CustomEvent('WebComponentsReady', {bubbles: true})
+                    );
+                }
+            };
+
+            var webComponentsSupported = (
+                    'registerElement' in document
+                    && 'import' in document.createElement('link')
+                    && 'content' in document.createElement('template')
+            );
+
+            if (!webComponentsSupported) {
+                var script = document.createElement('script');
+                script.async = true;
+                script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+                script.onload = onload;
+                document.head.appendChild(script);
+            } else {
+                onload();
+            }
+        })();
+
+        // Load pre-caching Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    </script>
+
+    <link rel="import" href="/app/my-app.html">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', 'Noto', sans-serif;
+            line-height: 1.5;
+            min-height: 100vh;
+            background-color: #eeeeee;
+        }
+    </style>
+</head>
+<body>
+<my-app></my-app>
+<!-- Built with love using Polymer Starter Kit -->
+</body>
+</html>
