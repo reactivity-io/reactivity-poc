@@ -1,5 +1,4 @@
-
 /.idea/
 /node_modules/
 /panel/build/
-yarn.lock
+/npm-debug.log

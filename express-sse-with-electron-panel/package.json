@@ -4,10 +4,9 @@
   "description": "Simple http server with SSE ",
   "main": "main.js",
   "scripts": {
+    "postinstall" : "gulp",
     "start": "electron .",
-    "watchify": "gulp",
-    "lint": "./node_modules/.bin/eslint .",
-    "dashboard": "nodejs-dashboard electron ."
+    "dev": "gulp dev"
   },
   "author": "Nathan DAMIE",
   "dependencies": {
@@ -27,7 +26,6 @@
     "babel-preset-stage-2": "^6.17.0",
     "babelify": "^7.3.0",
     "browserify": "^13.1.0",
-    "nodejs-dashboard": "^0.1.0",
     "electron-prebuilt": "^1.4.3",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-import": "^2.0.0",

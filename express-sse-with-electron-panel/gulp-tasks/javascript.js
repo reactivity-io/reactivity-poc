@@ -10,19 +10,18 @@ var uglify = require('gulp-uglify');
 // Build javascript files with browserify, reactify and babelify
 gulp.task('compile', (watch) => {
   let plugin = [];
+  watch = process.argv[2] === 'dev';
   if (watch) {
     plugin = [[watchify, { ignoreWatch: ['**/node_modules/**'] }]];
-    process.env.NODE_ENV = 'development';
-  } else {
-    process.env.NODE_ENV = 'production';
   }
+  console.log(process.argv);
   const bundler = browserify({
-    entries: "./panel/app/app.js",
+    entries: './panel/app/app.js',
     debug: true,
     cache: {},
     packageCache: {},
     plugin,
-    transform: [["eslintify"], ["babelify", { "presets": ["es2015", "react", "stage-2"] }], ["loose-envify"]]
+    transform: [['eslintify'], ['babelify', { 'presets': ['es2015', 'react', 'stage-2'] }], ['loose-envify']]
   });
 
   const rebundle = () => {
@@ -43,8 +42,8 @@ gulp.task('compile', (watch) => {
     bundler.on('update', () => {
       rebundle();
     });
-    bundler.on("time", (time) => {
-      console.log("   bundling done in " + time + "ms");
+    bundler.on('time', (time) => {
+      console.log('   bundling done in ' + time + 'ms');
     });
   }
   return rebundle();
