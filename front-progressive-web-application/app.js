@@ -27,6 +27,22 @@ app.get('/item', (req, res) => {
   }
 });
 
+app.get('/cache-first/:id', (req, res) => {
+  res.send({
+    id: req.params.id,
+    timestamp: new Date(),
+    type: 'cache-first',
+  });
+});
+
+app.get('/network-first/:id', (req, res) => {
+  res.send({
+    id: req.params.id,
+    timestamp: new Date(),
+    type: 'network-first',
+  });
+});
+
 /**
  * Register a new connection
  */

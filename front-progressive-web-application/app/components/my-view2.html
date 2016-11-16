@@ -1,19 +1,66 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="my-view2">
-  <template>
-    <div>
-      <h1>View Two</h1>
-      <p>Fizzbuzz</p>
-    </div>
-  </template>
+    <template>
+        <div>
+            <h1>View Two</h1>
+            <p>Display from cache if available:</p>
+            <ul>
+                <dom-repeat items="{{itemList}}">
+                    <template>
+                        <li>id: {{item.id}}, timestamp: {{item.timestamp}}, type: {{item.type}}</li>
+                    </template>
+                </dom-repeat>
+            </ul>
+        </div>
+    </template>
 
-  <script>
-    class MyView2 extends Polymer.Element {
-      static get is() {
-        return 'my-view2'
-      }
-    }
-    customElements.define(MyView2.is, MyView2);
-  </script>
+    <script>
+        class MyView2 extends Polymer.Element {
+            static get is() {
+                return 'my-view2'
+            }
+
+            static get config() {
+                return {
+                    properties: {
+                        itemList: {
+                            type: Array,
+                            value: []
+                        }
+                    }
+                }
+            }
+
+            constructor() {
+                super();
+            }
+
+            ready() {
+                this.callServer();
+                super.ready();
+            }
+
+            callServer() {
+                for (let i = 0; i < 10; i++) {
+                    const req = new XMLHttpRequest();
+                    req.open('GET', `./cache-first/${i}`, true);
+                    req.onreadystatechange = function (aEvt) {
+                        if (req.readyState == 4) {
+                            if (req.status == 200) {
+                                const fizzbuzz = this.itemList;
+                                fizzbuzz.push(JSON.parse(req.response));
+                                this.itemList = fizzbuzz;
+                            } else {
+                                console.error("Load error.\n");
+                            }
+                        }
+                    }.bind(this);
+                    req.send(null);
+                }
+                setTimeout(function(){console.log("fizzbuzz", this, this.itemList)}.bind(this), 5000);
+            }
+        }
+        customElements.define(MyView2.is, MyView2);
+    </script>
 </dom-module>
