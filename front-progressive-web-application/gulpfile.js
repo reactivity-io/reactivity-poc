@@ -16,6 +16,12 @@ global.config = {
   serviceWorkerPath: 'service-worker.js',
   // Service Worker precache options based on https://github.com/GoogleChrome/sw-precache#options-parameter
   swPrecacheConfig: {
+    staticFileGlobs: [
+      '/index.html',
+      '/manifest.json',
+      '/bower_components/webcomponentsjs/webcomponents-lite.min.js',
+      '/static/**/*.*',
+    ],
     navigateFallback: '/index.html',
     importScripts: ['/bower_components/sw-toolbox/sw-toolbox.js'],
     runtimeCaching: [{
@@ -23,11 +29,20 @@ global.config = {
       handler: 'networkFirst'
     }, {
       urlPattern: /\/cache-first\//,
-      handler: 'fastest',
+      handler: 'cacheFirst',
       options: {
         cache: {
           maxEntries: 5,
           name: 'cache-first'
+        }
+      }
+    }, {
+      urlPattern: /\/stream/,
+      handler: 'sse',
+      options: {
+        cache: {
+          maxEntries: 5,
+          name: 'network-first'
         }
       }
     }],

@@ -4,6 +4,7 @@
     <template>
         <div>
             <h1>View One</h1>
+            <img src="/static/images/tenryuji.jpg" width="250"/>
             <div class="item-add">
                 <input id="inputItem" type="text"/>
                 <button id="addItem">Add item</button>
@@ -37,15 +38,14 @@
 
             constructor() {
                 super();
-                console.log('created');
+                //console.log('component created');
             }
 
             ready() {
                 this.listenToStream();
                 super.ready();
                 this.$.addItem.addEventListener('click', this.addItem.bind(this));
-
-                console.log('ready');
+                //console.log('component ready');
             }
 
             listenToStream() {
@@ -57,12 +57,12 @@
                     }.bind(this), false);
 
                     source.addEventListener('open', function (e) {
-                        console.log("Connection opened");
+                        console.log("SSE connection opened");
                     }, false);
 
                     source.addEventListener('error', function (e) {
                         if (e.readyState == EventSource.CLOSED) {
-                            console.log("Connection closed")
+                            console.log("SSE connection closed")
                         }
                     }, false)
                 }

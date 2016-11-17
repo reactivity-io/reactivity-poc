@@ -1,10 +1,12 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="my-view2">
+<dom-module id="cache-first-view">
     <template>
         <div>
-            <h1>View Two</h1>
-            <p>Display from cache if available:</p>
+            <h1>Cache First</h1>
+            <p>Call server 10 times on /cache-first/:id. Last 5 calls should be in cache even if server is offline
+                thanks to sw-toolbox.</p>
+            <p><b>Itemlist:</b></p>
             <ul>
                 <dom-repeat items="{{itemList}}">
                     <template>
@@ -16,9 +18,9 @@
     </template>
 
     <script>
-        class MyView2 extends Polymer.Element {
+        class CacheFirstView extends Polymer.Element {
             static get is() {
-                return 'my-view2'
+                return 'cache-first-view'
             }
 
             static get config() {
@@ -58,9 +60,8 @@
                     }.bind(this);
                     req.send(null);
                 }
-                setTimeout(function(){console.log("fizzbuzz", this, this.itemList)}.bind(this), 5000);
             }
         }
-        customElements.define(MyView2.is, MyView2);
+        customElements.define(CacheFirstView.is, CacheFirstView);
     </script>
 </dom-module>

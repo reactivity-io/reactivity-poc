@@ -35,8 +35,8 @@
             }
         </style>
         <div>
-            <a href="/view1">View 1</a>
-            <a href="/view2">View 2</a>
+            <a href="/">SSE</a>
+            <a href="/view2">Cache First</a>
             <a href="/view3">View 3</a>
         </div>
         <app-location route="{{route}}"></app-location>
@@ -52,7 +52,7 @@
                 fallback-selection="view404"
                 role="main">
             <my-view1 name="view1"></my-view1>
-            <my-view2 name="view2"></my-view2>
+            <cache-first-view name="view2"></cache-first-view>
             <my-view404 name="view404"></my-view404>
         </iron-pages>
     </template>
