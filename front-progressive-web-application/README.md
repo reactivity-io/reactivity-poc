@@ -6,6 +6,7 @@ Trying to push most of PWA concepts into this proof of concept.
 
 ```sh
 npm install
+node_modules/.bin/bower install
 ```
 
 
