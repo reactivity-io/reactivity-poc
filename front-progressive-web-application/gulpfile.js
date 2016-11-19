@@ -36,15 +36,15 @@ global.config = {
           name: 'cache-first'
         }
       }
-    }, {
-      urlPattern: /\/stream/,
-      handler: 'sse',
-      options: {
-        cache: {
-          maxEntries: 5,
-          name: 'network-first'
-        }
-      }
+    //}, {
+    //  urlPattern: /\/stream/,
+    //  handler: 'sse',
+    //  options: {
+    //    cache: {
+    //      maxEntries: 5,
+    //      name: 'network-first'
+    //    }
+    //  }
     }],
   }
 };
