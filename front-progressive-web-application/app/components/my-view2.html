@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="./custom-card.html">
+
 
 <dom-module id="cache-first-view">
     <template>
@@ -10,7 +12,7 @@
             <ul>
                 <dom-repeat items="{{itemList}}">
                     <template>
-                        <li>id: {{item.id}}, timestamp: {{item.timestamp}}, type: {{item.type}}</li>
+                        <li><custom-card card={{item}}></custom-card></li>
                     </template>
                 </dom-repeat>
             </ul>

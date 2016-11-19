@@ -1,0 +1,42 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="custom-card">
+    <template>
+        <div>
+            <div>Title: {{card.id}}</div>
+            <div>
+                <div>Type: {{card.type}}</div>
+                <div>Timestamp: {{card.timestamp}}</div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        class CustomCard extends Polymer.Element {
+            static get is() {
+                return 'custom-card'
+            }
+
+            static get config() {
+                return {
+                    properties: {
+                        card: {
+                            type: Object,
+                            value: "{}"
+                        }
+                    }
+                }
+            }
+
+            constructor() {
+                super();
+            }
+
+            ready() {
+                super.ready();
+            }
+
+        }
+        customElements.define(CustomCard.is, CustomCard);
+    </script>
+</dom-module>
