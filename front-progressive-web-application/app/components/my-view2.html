@@ -4,18 +4,21 @@
 
 <dom-module id="cache-first-view">
     <template>
-        <div>
+        <style>
+            .content {
+                background-color: #f1f1f1;
+            }
+        </style>
+        <div class="content">
             <h1>Cache First</h1>
             <p>Call server 10 times on /cache-first/:id. Last 5 calls should be in cache even if server is offline
                 thanks to sw-toolbox.</p>
             <p><b>Itemlist:</b></p>
-            <ul>
                 <dom-repeat items="{{itemList}}">
                     <template>
-                        <li><custom-card card={{item}}></custom-card></li>
+                        <custom-card card={{item}}></custom-card>
                     </template>
                 </dom-repeat>
-            </ul>
         </div>
     </template>
 
