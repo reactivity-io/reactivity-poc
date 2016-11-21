@@ -20,7 +20,7 @@
 
             .card-header {
                 height: 200px;
-                border-radius: 2px;
+                border-radius: 2px 2px 0px 0px;
                 background-image: url('/static/images/fushimiinari.jpg');
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -28,16 +28,14 @@
 
             .card-status {
                 width: 100%;
-                padding: 0px 15px;
+                height: 5px
             }
 
             .card-status-item {
                 height: 5px;
-                width: 60px;
-                display: inline-block;
-                margin-right: 10px;
-                border-radius: 4px;
-
+                width: 100%;
+                display: block;
+                float: left;
             }
 
             .card-status-item-pending {
@@ -49,7 +47,14 @@
             }
 
             .card-title {
-                padding: 5px 15px;
+                padding: 5px 15px 0;
+                font-weight: 700;
+            }
+
+            .card-description {
+                padding: 0 15px 5px;
+                color: #616161;
+                font-size: 0.8em;
             }
 
             .card-action-additional {
@@ -57,6 +62,10 @@
                 padding: 5px 15px;
                 line-height: 12px;
                 text-align: right;
+            }
+            paper-icon-button.action-button {
+                width: 35px;
+                height: 35px;
             }
 
             .hidden {
@@ -70,13 +79,13 @@
                 </div>
                 <div class="card-status">
                     <div class="card-status-item card-status-item-pending"></div>
-                    <div class="card-status-item card-status-item-done"></div>
                 </div>
-                <div class="card-title">title: {{card.id}} -- type: {{card-type}} -- timestamp: {{card.timestamp}}</div>
+                <div class="card-title">Title {{card.id}}</div>
+                <div class="card-description">This card is of type {{card.type}} received at {{card.timestamp}}</div>
             </div>
             <div class="card-action-additional">
-                <paper-icon-button icon="editor:mode-comment" title="mode-comment"></paper-icon-button>
-                <paper-icon-button icon="editor:attach-file" title="attach-file"></paper-icon-button>
+                <paper-icon-button icon="editor:mode-comment" title="mode-comment" class="action-button"></paper-icon-button>
+                <paper-icon-button icon="editor:attach-file" title="attach-file" class="action-button"></paper-icon-button>
             </div>
         </div>
     </template>

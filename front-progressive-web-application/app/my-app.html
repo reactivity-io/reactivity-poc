@@ -14,30 +14,48 @@
                 display: block;
             }
 
-            .drawer-list {
-                margin: 0 20px;
+            .topbar {
+                background-color: #FFC107;
+                width: 100%;
             }
 
-            .drawer-list a {
-                display: block;
-
-                padding: 0 16px;
-
+            .topbar a {
                 text-decoration: none;
-
-                line-height: 40px;
-            }
-
-            .drawer-list a.iron-selected {
                 color: black;
-
-                font-weight: bold;
             }
+
+            .topbar-item {
+                display: inline-block;
+                padding: 14px;
+                font-size: 1.2em;
+            }
+
+            .topbar-item:hover {
+                background-color: #FFB300
+            }
+
+            .topbar-item:active {
+                background-color: #FFA000
+            }
+
+
         </style>
-        <div>
-            <a href="/">SSE</a>
-            <a href="/view2">Cache First</a>
-            <a href="/view3">View 3</a>
+        <div class="topbar">
+            <a href="/">
+                <div class="topbar-item">
+                    SSE
+                </div>
+            </a>
+            <a href="/view2">
+                <div class="topbar-item">
+                    Cache First
+                </div>
+            </a>
+            <a href="/view3">
+                <div class="topbar-item">
+                    View 3
+                </div>
+            </a>
         </div>
         <app-location route="{{route}}"></app-location>
         <app-route
@@ -91,7 +109,8 @@
             _showPage404() {
                 this.page = 'view404';
             }
-        };
+        }
+        ;
         customElements.define(MyApp.is, MyApp);
     </script>
 </dom-module>

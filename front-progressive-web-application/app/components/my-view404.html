@@ -1,19 +1,25 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="my-view404">
-  <template>
-    <div>
-      <h1>404</h1>
-      <p>Well that sucks.</p>
-    </div>
-  </template>
+    <template>
+        <style>
+            .content {
+                background-color: #f1f1f1;
+                margin: 14px;
+            }
+        </style>
+        <div class="content">
+            <h1>404</h1>
+            <p>Well that sucks.</p>
+        </div>
+    </template>
 
-  <script>
-    class MyView404 extends Polymer.Element {
-      static get is() {
-        return 'my-view404'
-      }
-    }
-    customElements.define(MyView404.is, MyView404);
-  </script>
+    <script>
+        class MyView404 extends Polymer.Element {
+            static get is() {
+                return 'my-view404'
+            }
+        }
+        customElements.define(MyView404.is, MyView404);
+    </script>
 </dom-module>
