@@ -57,12 +57,45 @@
                 font-size: 0.8em;
             }
 
-            .card-action-additional {
+            .card-bottom {
                 border-top: 1px solid rgba(0, 0, 0, .1);
+                height: 46px;
+            }
+
+            .card-about {
+                padding: 7px 15px;
+                float: left;
+            }
+
+            .card-user-chip {
+                height: 32px;
+                border-radius: 16px;
+                background-color: #EEEEEE;
+            }
+
+            .card-user-icon {
+                height: 32px;
+                width: 32px;
+                background-image: url('/static/images/octocat.svg');
+                background-size: contain;
+                border-radius: 50%;
+                display: inline-block;
+            }
+
+            .card-user-name {
+                font-size: 0.8em;
+                display: block;
+                float: right;
+                margin: 7px 12px 7px 7px;
+            }
+
+            .card-action-additional {
+                float: right;
                 padding: 5px 15px;
                 line-height: 12px;
                 text-align: right;
             }
+
             paper-icon-button.action-button {
                 width: 35px;
                 height: 35px;
@@ -83,9 +116,19 @@
                 <div class="card-title">Title {{card.id}}</div>
                 <div class="card-description">This card is of type {{card.type}} received at {{card.timestamp}}</div>
             </div>
-            <div class="card-action-additional">
-                <paper-icon-button icon="editor:mode-comment" title="mode-comment" class="action-button"></paper-icon-button>
-                <paper-icon-button icon="editor:attach-file" title="attach-file" class="action-button"></paper-icon-button>
+            <div class="card-bottom">
+                <div class="card-about">
+                    <div class="card-user-chip">
+                        <div class="card-user-icon"></div>
+                        <div class="card-user-name">Octocat</div>
+                    </div>
+                </div>
+                <div class="card-action-additional">
+                    <paper-icon-button icon="editor:mode-comment" title="mode-comment"
+                                       class="action-button"></paper-icon-button>
+                    <paper-icon-button icon="editor:attach-file" title="attach-file"
+                                       class="action-button"></paper-icon-button>
+                </div>
             </div>
         </div>
     </template>
