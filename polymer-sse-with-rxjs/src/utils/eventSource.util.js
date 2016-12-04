@@ -6,11 +6,13 @@ class EventSourceManager {
 
       const onOpen = (e) => {
         observer.onNext(e);
-        this.source.removeEventListener('open', onOpen, false);
+          console.log("%c SSE reconnected", "font-size:22px;text-shadow: 0 0 3px #FF0000, 0 0 5px blue;");
+
+          // this.source.removeEventListener('open', onOpen, false);
       };
 
       const onError = (e) => {
-        if (e.readyState === EventSource.CLOSED) {
+        if (e.eventPhase === EventSource.CLOSED) {
           observer.onCompleted();
         } else {
           observer.onError(e);

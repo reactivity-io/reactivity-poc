@@ -82,7 +82,7 @@
         color: var(--app-secondary-color);
       }
     </style>
-    <paper-card image="{{image}}" alt="reactivx">
+    <paper-card image="{{image}}" alt="reactivx" >
       <div class="card-content">
         <div class="cafe-header">{{name}}
           <div class="cafe-location cafe-light">
@@ -108,7 +108,7 @@
         <!--<paper-button>7:30PM</paper-button>-->
         <!--<paper-button>9:00PM</paper-button>-->
         <!--</div>-->
-        <paper-button class="cafe-reserve">Reserve</paper-button>
+        <paper-button class="cafe-reserve" on-click="handleTap">Open</paper-button>
       </div>
     </paper-card>
   </template>
@@ -134,7 +134,7 @@
 
       handleTap() {
         console.log("TAP");
-        document.dispatchEvent(new CustomEvent('routeChange', { "detail": { "page": '/reactivity' } }), { "bubbles": true });
+        document.dispatchEvent(new CustomEvent('changeOrga', { "detail": { "page": '/reactivity' } }), { "bubbles": true });
       }
     }
     // Register custom element definition using standard platform API

@@ -7,7 +7,7 @@
       #content {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;;
+        justify-content: space-around;
         width: 100%;
         height: 100%;
         box-sizing: border-box;
@@ -16,9 +16,13 @@
 
       app-orga {
         max-width: calc(25% - 35px);
-        margin: 20px 0;
+        min-width: 325px;
+        margin: 20px 10px;
       }
 
+      app-orga:hover {
+        cursor: pointer;
+      }
       .hidden {
         display: none;
       }

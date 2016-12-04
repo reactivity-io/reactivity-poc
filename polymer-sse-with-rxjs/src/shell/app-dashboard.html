@@ -48,6 +48,13 @@
         }
       }
 
+      connectedCallback() {
+        super.connectedCallback();
+        document.addEventListener('changeOrga', (e) => {
+          console.log('%c Change Orga : ', 'color: blue', e);
+        })
+      }
+
       _routePageChanged(page) {
         this.page = page || 'my-organisations';
       }

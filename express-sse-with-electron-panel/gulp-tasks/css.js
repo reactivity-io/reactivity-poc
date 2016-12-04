@@ -9,7 +9,7 @@ const path = 'panel/app/**/*.css';
 gulp.task('css', () => {
   const watch = process.argv[1] === 'dev';
   if (watch) {
-    css()
+    css();
     return gulp.watch(path, () => (
       css()
     ));
