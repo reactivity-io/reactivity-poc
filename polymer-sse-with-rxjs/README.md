@@ -3,17 +3,10 @@
 ## Dev
 ### Install Dependencies
 
+
+#### /!\ some dep need ssh key on github (windows shell can't open passphrase prompt !) /!\
 ```sh
 npm install
-```
-
-```sh
-npm install -g bower
-```
-
-#### /!\ some dep need ssh key on github /!\
-```sh
-bower install
 ```
 
 ### Launch server with panel

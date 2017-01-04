@@ -1,7 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 
-<link rel="import" href="shell/app-nav.html">
-<link rel="import" href="shell/app-dashboard.html">
+<link rel="import" href="shell/navbar/navbar.html">
+<link rel="import" href="shell/dashboard/dashboard.html">
 
 <dom-module id="my-app">
   <template>
@@ -19,13 +19,13 @@
         font-family: 'Roboto', 'Noto', sans-serif;
       }
 
-      app-dashboard {
+      s-dashboard {
         top: 64px;
         position: relative;
       }
     </style>
-    <app-nav></app-nav>
-    <app-dashboard></app-dashboard>
+    <s-navbar></s-navbar>
+    <s-dashboard></s-dashboard>
   </template>
 
   <script>

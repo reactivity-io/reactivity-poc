@@ -4,11 +4,13 @@
   "description": "Web application to manage the activity that matters",
   "main": "main.js",
   "scripts": {
+    "postinstall": "bower install",
     "start": "gulp",
     "lint": "./node_modules/.bin/eslint ."
   },
   "author": "Nathan DAMIE",
   "devDependencies": {
+    "bower": "^1.8.0",
     "browser-sync": "^2.17.5",
     "del": "^2.2.2",
     "gulp": "github:gulpjs/gulp#4.0",

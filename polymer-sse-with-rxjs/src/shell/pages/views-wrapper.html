@@ -1,7 +1,7 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../components/app-orga2.html">
+<link rel="import" href="../../components/app-view.html">
 
-<dom-module id="orga-wrapper">
+<dom-module id="views-wrapper">
   <template>
     <style>
       #content {
@@ -14,13 +14,13 @@
         background-color: var(--app-secondary-color);
       }
 
-      app-orga {
+      app-view {
         max-width: calc(25% - 35px);
         min-width: 325px;
         margin: 20px 10px;
       }
 
-      app-orga:hover {
+      app-view:hover {
         cursor: pointer;
       }
       .hidden {
@@ -29,23 +29,22 @@
     </style>
     <div id="content">
       <template class="hidden" is="dom-repeat" items="{{organisations}}" as="orga">
-        <app-orga name="{{orga.attributes.name}}"
+        <app-view name="{{orga.attributes.name}}"
                   number="{{orga.attributes.itemNumber}}"
                   date="{{orga.attributes.creationDate}}"
                   image="{{orga.attributes.image}}"
                   description="{{orga.attributes.description}}">
 
-        </app-orga>
+        </app-view>
       </template>
     </div>
   </template>
-  <script src="../../utils/component.util.js"></script>
   <script src="../../utils/eventSource.util.js"></script>
   <script src="../../../node_modules/lodash/lodash.min.js"></script>
   <script>
-    class OrgaWrapper extends Polymer.Element {
+    class ViewsWrapper extends Polymer.Element {
       static get is() {
-        return 'orga-wrapper';
+        return 'views-wrapper';
       }
 
       static get config() {
@@ -92,6 +91,6 @@
       }
     }
     // Register custom element definition using standard platform API
-    customElements.define(OrgaWrapper.is, OrgaWrapper);
+    customElements.define(ViewsWrapper.is, ViewsWrapper);
   </script>
 </dom-module>

@@ -1,5 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<dom-module id="app-nav">
+<dom-module id="s-navbar">
   <template>
     <style>
       .header {
@@ -37,25 +36,17 @@
     </style>
     <div class="header">
       <div class="horizontal-wrapper">
-        <a href="/my-organisations" class="horizontal-wrapper">
-          <img class="logo" src="./idea.png" alt="logo"/>
+        <a href="/organisations" class="horizontal-wrapper">
+          <img class="logo" src="./shell/navbar/idea.png" alt="logo"/>
           <span>Reactivity</span>
         </a>
 
       </div>
       <div class="horizontal-wrapper">
-        <a href="/my-settings">Settings</a>
+        <a href="/settings">settings</a>
+        <a href="/organisations">orga</a>
       </div>
     </div>
   </template>
-  <script>
-    // Extend Polymer.Element base class
-    class AppNav extends Polymer.Element {
-      static get is() {
-        return 'app-nav';
-      }
-    }
-    // Register custom element definition using standard platform API
-    customElements.define(AppNav.is, AppNav);
-  </script>
+  <script src="navbar.js"></script>
 </dom-module>

@@ -26,6 +26,6 @@ global.config = {
 // Require tasks from /gulp-tasks folder
 require('require-dir')('./gulp-tasks');
 
-const allBuildTasks = ['clean', 'build', 'serve'];
+const allBuildTasks = ['clean',  'serve'];
 
 gulp.task('default', gulp.series(allBuildTasks));

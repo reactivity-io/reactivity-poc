@@ -1,4 +1,4 @@
-class EventSourceManager {
+window.EventSourceManager = class EventSourceManager {
   constructor(url, manager) {
     //Create an Observable for the EventSource Connection
     this.sourceObservable = Rx.Observable.create((observer) => {
@@ -11,6 +11,7 @@ class EventSourceManager {
           // this.source.removeEventListener('open', onOpen, false);
       };
 
+      //TODO : On error subscribe to a new stream (wso )
       const onError = (e) => {
         if (e.eventPhase === EventSource.CLOSED) {
           observer.onCompleted();
@@ -73,4 +74,4 @@ class EventSourceManager {
       }
     }
   }
-}
+};
