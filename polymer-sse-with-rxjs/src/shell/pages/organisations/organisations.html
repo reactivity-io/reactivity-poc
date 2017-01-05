@@ -27,15 +27,12 @@
                 display: none;
             }
         </style>
-        <app-route
-                route="{{orgaRoute}}"
-                pattern="/:id"
-                data="{{routeData}}"
-                tail="{{subroute}}" use-hash-as-path></app-route>
         <div id="content">
             <template class="hidden" is="dom-repeat" items="{{organisations}}" as="orga">
-                <app-orga name="{{orga.data.name}}"
-                          image="{{orga.data.picture}}">
+                <app-orga
+                        id="{{orga.id}}"
+                        name="{{orga.data.name}}"
+                        image="{{orga.data.picture}}">
                 </app-orga>
             </template>
         </div>

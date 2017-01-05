@@ -12,6 +12,7 @@
   "devDependencies": {
     "bower": "^1.8.0",
     "browser-sync": "^2.17.5",
+    "browser-sync-spa": "^1.0.3",
     "del": "^2.2.2",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-if": "^2.0.2",

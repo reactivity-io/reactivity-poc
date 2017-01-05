@@ -1,0 +1,59 @@
+<!--Import polymer element once at the main element -->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-router/app-router.html">
+
+<link rel="import" href="shell/navbar/navbar.html">
+<dom-module id="reactivity-shell">
+  <template>
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        background-color: var(--app-secondary-color);
+      }
+
+      :host {
+        --app-primary-color: rgb(232, 52, 90);
+        --app-secondary-color: rgb(38, 50, 56);
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+      }
+
+      #router {
+        top: 64px;
+        position: relative;
+      }
+    </style>
+
+    <s-navbar></s-navbar>
+
+    <app-router id="router" class="flex" mode="pushstate">
+      <app-route path="/" import="./src/shell/pages/organisations/organisations.html" element="s-organisations"></app-route>
+      <app-route path="/settings" import="./src/shell/pages/settings/settings.html" element="s-settings"></app-route>
+      <app-route path="/organisation/:element" import="./src/shell/pages/organisation/organisation.html" element="s-organisation" ></app-route>
+      <app-route path="*" element="view-404"></app-route>
+    </app-router>
+
+  </template>
+
+  <script>
+    // Extend Polymer.Element base class
+    class ReactivityShell extends Polymer.Element {
+      static get is() {
+        return 'reactivity-shell';
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+
+        //The application (My-app element) manage the routing so let him switch page :)
+        document.addEventListener('nav', (e)=> {
+          this.$.router.go(e.detail.path)
+        });
+        //No need to removeListener cause this is the main entry point of the application (if unmount no more fun)
+      }
+    }
+    // Register custom element definition using standard platform API
+    customElements.define(ReactivityShell.is, ReactivityShell);
+  </script>
+</dom-module>

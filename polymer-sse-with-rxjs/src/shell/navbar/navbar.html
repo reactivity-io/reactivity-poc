@@ -1,3 +1,4 @@
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
 <dom-module id="s-navbar">
   <template>
     <style>
@@ -33,18 +34,28 @@
         text-decoration: none;
         color: white;
       }
+
+      a.icon {
+        height:24px;
+        width:24px;
+      }
+
+      iron-icon.icon {
+        position: absolute;
+      }
     </style>
     <div class="header">
       <div class="horizontal-wrapper">
-        <a href="/organisations" class="horizontal-wrapper">
+        <a href="/" class="horizontal-wrapper" on-click="handleClick">
           <img class="logo" src="./shell/navbar/idea.png" alt="logo"/>
           <span>Reactivity</span>
         </a>
 
       </div>
       <div class="horizontal-wrapper">
-        <a href="/settings">settings</a>
-        <a href="/organisations">orga</a>
+        <a class="icon" href="/settings" on-click="handleClick">
+          <iron-icon class="icon" icon="icons:settings"></iron-icon>
+        </a>
       </div>
     </div>
   </template>
