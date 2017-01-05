@@ -11,7 +11,7 @@ class ShellOrganisations extends Polymer.Element {
     connectedCallback() {
         super.connectedCallback();
         var req = new XMLHttpRequest();
-        req.open('GET', 'http://localhost:8080/load/organizations', true);
+        req.open('GET', 'http://localhost:3000/api/load/organizations', true);
         req.onreadystatechange = () => {
             if (req.readyState == 4) {
                 if(req.status == 200) {
