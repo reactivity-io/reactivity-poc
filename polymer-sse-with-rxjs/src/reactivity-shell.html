@@ -30,8 +30,8 @@
     <app-router id="router" class="flex" mode="pushstate">
       <app-route path="/" import="./src/shell/pages/organisations/organisations.html" element="s-organisations"></app-route>
       <app-route path="/settings" import="./src/shell/pages/settings/settings.html" element="s-settings"></app-route>
-      <app-route path="/organisation/:element" import="./src/shell/pages/organisation/organisation.html" element="s-organisation" ></app-route>
-      <app-route path="*" element="view-404"></app-route>
+      <app-route path="/organisation/:id" import="./src/shell/pages/organisation/organisation.html" element="s-organisation" ></app-route>
+      <app-route path="*" import="./src/shell/pages/404/view-404.html"></app-route>
     </app-router>
 
   </template>
@@ -45,6 +45,8 @@
 
       connectedCallback() {
         super.connectedCallback();
+
+        console.log('%cWelcome to Reactivity!\n%cweb components are the <bees-knees>',"font-size:1.5em;color:#4558c9;","color:#d61a7f;font-size:1em;")
 
         //The application (My-app element) manage the routing so let him switch page :)
         document.addEventListener('nav', (e)=> {

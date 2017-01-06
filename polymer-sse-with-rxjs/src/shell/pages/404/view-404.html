@@ -1,0 +1,77 @@
+<link rel="import" href="../../../../bower_components/iron-image/iron-image.html">
+
+<dom-module id="view-404">
+  <template>
+    <style>
+      #content {
+        display: flex;
+        justify-content: center;
+        background-color: var(--app-secondary-color);
+        color: white;
+        padding:100px 40px;
+      }
+
+      .page-error {
+        width: 100%;
+        display: flex;
+        flex:1;
+        justify-content: space-around;
+        max-width: 900px;
+      }
+
+      h2 {
+        font-weight: 400;
+      }
+      a {
+        color: var(--app-primary-color);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .image-container {
+        display: flex;
+        margin-right: 40px;
+      }
+      iron-image {
+        width: 250px;
+        --iron-image-width: 100%;
+        filter: invert(1) hue-rotate(300deg);
+      }
+
+      .flex {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+    <div id="content">
+        <div class="page-error">
+          <div class="image-container">
+            <iron-image src="./shell/pages/404/polymerosaurus.png" alt="The Polymer logo."></iron-image>
+          </div>
+          <div class="flex">
+            <h1>Not found.</h1>
+            <h2>We're sorry, but the polymerosaurus can't find the page you were looking for.</h2>
+            <p>Maybe head back to the <a href="/" on-tap="handleClick">homepage</a> or use one of the menu links instead?</p>
+          </div>
+        </div>
+    </div>
+  </template>
+  <script>
+    // Extend Polymer.Element base class
+    class View404 extends Polymer.Element {
+      static get is() {
+        return 'view-404';
+      }
+
+      handleClick (e) {
+        e.preventDefault();
+        document.dispatchEvent(new CustomEvent('nav',{detail: {path:e.currentTarget.pathname}}));
+      }
+    }
+    // Register custom element definition using standard platform API
+    customElements.define(View404.is, View404);
+  </script>
+</dom-module>

@@ -18,6 +18,7 @@
         padding: 0 64px;
         overflow: hidden;
         justify-content: space-between;
+        box-shadow: 0 1px 7px 0 black;
       }
 
       .horizontal-wrapper {
@@ -38,6 +39,7 @@
       a.icon {
         height:24px;
         width:24px;
+        margin-right: 15px;
       }
 
       iron-icon.icon {
@@ -55,6 +57,9 @@
       <div class="horizontal-wrapper">
         <a class="icon" href="/settings" on-click="handleClick">
           <iron-icon class="icon" icon="icons:settings"></iron-icon>
+        </a>
+        <a class="icon" href="/404" on-click="handleClick">
+          <iron-icon class="icon" icon="icons:error-outline"></iron-icon>
         </a>
       </div>
     </div>

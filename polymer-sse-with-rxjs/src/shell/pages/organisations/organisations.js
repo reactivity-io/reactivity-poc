@@ -17,7 +17,7 @@ class ShellOrganisations extends Polymer.Element {
                 if(req.status == 200) {
                     this.organisations = JSON.parse(req.responseText);
                 } else {
-                    alert("Erreur pendant le chargement de la page.\n");
+                    alert("Don't be silly launch the server !\n");
                 }
             }
         };

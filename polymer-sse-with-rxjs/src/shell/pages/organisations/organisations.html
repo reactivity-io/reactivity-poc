@@ -30,7 +30,7 @@
         <div id="content">
             <template class="hidden" is="dom-repeat" items="{{organisations}}" as="orga">
                 <app-orga
-                        id="{{orga.id}}"
+                        id={{orga.id}}
                         name="{{orga.data.name}}"
                         image="{{orga.data.picture}}">
                 </app-orga>

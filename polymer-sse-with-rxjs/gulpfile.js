@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 const proxyMiddleware = require('http-proxy-middleware');
-
+const historyApiFallback = require('connect-history-api-fallback');
 
 const options = {
     target: 'http://localhost:8080',
@@ -18,7 +18,10 @@ gulp.task('default', () => {
         server: {
             baseDir: "./",
             index: "index.html",
-            middleware: proxyMiddleware('/api', options)
+            middleware: [
+                historyApiFallback(),
+                proxyMiddleware('/api', options)
+            ]
         }
     });
 });

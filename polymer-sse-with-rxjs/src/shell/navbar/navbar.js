@@ -3,10 +3,10 @@ class ShellNavbar extends Polymer.Element {
         return 's-navbar';
     }
 
-    handleClick (e) {
-        e.preventDefault();
-        document.dispatchEvent(new CustomEvent('nav',{detail: {path:e.currentTarget.pathname}}));
-    }
+        handleClick (e) {
+                e.preventDefault();
+                document.dispatchEvent(new CustomEvent('nav',{detail: {path:e.currentTarget.pathname}}));
+        }
 }
 
 // Register custom element definition using standard platform API
